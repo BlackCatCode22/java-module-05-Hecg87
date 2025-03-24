@@ -1,0 +1,56 @@
+Reviewing the Java code from your Animal, Cat, and Dog classes, here are some observations and suggestions for improvement:
+
+
+General Observations:
+-
+Both Cat.java and Dog.java classes contain very similar code structures and methods. This indicates a need for better abstraction, potentially by moving shared functionality to the Animal class.
+
+Static Usage: The use of static fields to count instances of animals (numOfAnimals) might lead to incorrect behavior if multiple types of animals are intended to share this value. Additionally, if you instantiate other types of animals, this count will not accurately reflect the total number of animals.
+
+Class Design: The Animal class is underutilized and currently only serves to instantiate one Dog and one Cat. Consider enhancing its design to make it a more integral part of the hierarchy.
+
+
+Specific Improvements:
+1. Animal.java
+Purpose Clarification: Define a clear role for this class. It could act as a superclass for common properties and methods (e.g., name, age).
+
+Enhanced Functionality: Implement methods that could be inherited by Cat and Dog, such as getters and setters for common attributes.
+
+2. Cat.java and Dog.java
+Redundant Code: Both classes use a static numOfAnimals. It's better to manage this in the Animal class and have it increase whenever a new Cat or Dog is created.
+
+Visibility and Access: Consider encapsulating the properties more strictly by making attributes like age and name private and providing public getter and setter methods.
+
+Method Specificity: Avoid static methods where instance-specific data is more appropriate, such as getCatCount() and getDogCount(), which are inherently object-specific.
+
+For both Cat and Dog, extend Animal and remove redundant code:
+
+public class Cat extends Animal {
+    public static final int MAX_LIVES = 9;
+    private int livesRemaining;
+
+    public Cat() {
+        super(); // Call Animal's constructor
+        livesRemaining = MAX_LIVES;
+    }
+
+    public void meow() {
+        System.out.println("Meow");
+    }
+}
+
+public class Dog extends Animal {
+    public static final int MAX_GOODBOY = 1000;
+    private int goodBoyPoints;
+
+    public Dog() {
+        super(); // Call Animal's constructor
+        goodBoyPoints = MAX_GOODBOY;
+    }
+
+    public void bark() {
+        System.out.println("WOOF!");
+    }
+}
+
+These changes will make your code more maintainable, reduce redundancy, and improve the object-oriented design. Consider adding further functionalities that leverage the capabilities of object-oriented programming such as polymorphism and interfaces.
